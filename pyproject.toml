@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "watcher-cli"
+version = "0.1.0"
+description = ""
+authors = ["denzow <denzow@gmail.com>"]
+license = "MIT"
+packages = [
+    { include="watcher", from="." },
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+"ruamel.yaml" = "^0.17.21"
+watchdog = "^2.1.7"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+run-watcher-cli = 'watcher.main:main'
