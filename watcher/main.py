@@ -1,11 +1,6 @@
 import time
 import argparse
-import dataclasses
-
-
-@dataclasses.dataclass(frozen=True)
-class CommandArgs:
-    config: str
+from watcher.watcher import CommandArgs, WatcherBase
 
 
 def parse_args():
@@ -19,13 +14,13 @@ def parse_args():
     )
     args = parser.parse_args()
     return CommandArgs(
-        config=args.config
+        config_file_name=args.config
     )
 
 
 def main():
     command_args = parse_args()
     print('start watch', command_args)
-    while True:
-        time.sleep(1)
+    watcher = WatcherBase(command_args)
+    watcher.run()
 
