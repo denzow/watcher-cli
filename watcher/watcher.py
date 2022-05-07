@@ -26,7 +26,7 @@ class WatcherBase:
     def run(self):
         for rule in self.config.rules:
             observer = Observer()
-            handler = Handler()
+            handler = Handler(rule)
             observer.schedule(handler, rule.dir, recursive=rule.recursive)
             observer.start()
             self._observers.append(observer)

@@ -1,12 +1,10 @@
 rules:
-  - dir: /tmp
+  - dir: ./tmp
     recursive: true
     match_rule: 'file_zie > 100 * 1024 * 1024' # over 100MB
-    mode: 'replace' # or copy
     action: 'mv {file_name} big_{file_name}'
 
-  - dir: /tmp
-    recursive: false
-    match_rule: 'file_zie < 100 * 1024 * 1024' # under 100MB
-    mode: 'copy'
-    action: 'mv {file_name} small_{file_name}'
+#  - dir: ./tmp
+#    recursive: false
+#    match_rule: 'file_zie < 100 * 1024 * 1024' # under 100MB
+#    action: 'mv {file_name} small_{file_name}'
