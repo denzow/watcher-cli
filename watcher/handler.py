@@ -2,6 +2,7 @@ from pathlib import Path
 from watchdog.events import FileSystemEventHandler, FileClosedEvent, FileSystemMovedEvent
 
 from .config_dto import WatchRule
+from .matcher import SQLMatcher
 
 
 class Handler(FileSystemEventHandler):
@@ -18,13 +19,17 @@ class Handler(FileSystemEventHandler):
     def __init__(self, watch_rule: WatchRule):
         self.watch_rule = watch_rule
         self.creating_files = []
+        self.matcher = SQLMatcher()
 
     def _is_match(self, file_path: str):
 
         try:
             path = Path(file_path)
-            print(path.stat(), self.watch_rule.match_rule)
-            return True
+            result = self.matcher.match(
+                target=self.stat_to_json(path),
+                condition=self.watch_rule.match_rule
+            )
+            return result
         except Exception as e:
             print(e)
             return False
@@ -48,3 +53,10 @@ class Handler(FileSystemEventHandler):
         if not self._is_match(event.src_path):
             return
         print(event)
+
+    @staticmethod
+    def stat_to_json(path: Path) -> dict:
+        s_obj = path.stat()
+        stats = {k.split('st_')[1]: getattr(s_obj, k) for k in dir(s_obj) if k.startswith('st_')}
+        stats['name'] = path.name
+        return stats

@@ -1,10 +1,10 @@
 rules:
   - dir: ./tmp
     recursive: true
-    match_rule: 'file_zie > 100 * 1024 * 1024' # over 100MB
+    match_rule: 'size > 10 * 1024 * 1024' # over 10MB
     action: 'mv {file_name} big_{file_name}'
 
 #  - dir: ./tmp
 #    recursive: false
-#    match_rule: 'file_zie < 100 * 1024 * 1024' # under 100MB
+#    match_rule: 'st_size < 100 * 1024 * 1024' # under 100MB
 #    action: 'mv {file_name} small_{file_name}'
